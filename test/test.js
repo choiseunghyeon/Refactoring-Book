@@ -1,6 +1,6 @@
 import assert from "assert";
-import Province from "./sample.js";
-import sampleProvinceData from "./provinceData.js";
+import Province from "../sample.js";
+import sampleProvinceData from "../provinceData.js";
 
 describe("province", function () {
   let asia;
