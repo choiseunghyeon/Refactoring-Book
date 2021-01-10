@@ -11,8 +11,27 @@ const station = {
   ],
 };
 
-const alerts = readingOutsideRange(station, operationPlan.temperatureFloor, operationPlan.temperatureCeiling);
+class NumberRange {
+  constructor(min, max) {
+    this._data = { min, max };
+  }
 
-function readingOutsideRange(station, min, max) {
-  return station.readings.filter(r => r.temp < min || r.temp > max);
+  contains(temperature) {
+    return temperature >= this.min && temperature <= this.max;
+  }
+
+  get min() {
+    return this._data.min;
+  }
+  get max() {
+    return this._data.max;
+  }
+}
+
+const range = new NumberRange(operationPlan.temperatureFloor, operationPlan.temperatureCeiling);
+
+const alerts = readingOutsideRange(station, range);
+
+function readingOutsideRange(station, range) {
+  return station.readings.filter(r => !range.contains(r.temp));
 }
