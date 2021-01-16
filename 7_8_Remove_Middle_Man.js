@@ -1,3 +1,5 @@
+// manger와 같은 위임 메서드가 많아 진다면 차라리 중개자를 제거하고 client에서 직접 department 객체에서 가져오는게 나을 수 있다.
+
 class Person {
   constructor(name) {
     this._name = name;
@@ -7,12 +9,12 @@ class Person {
     return this._name;
   }
 
-  set department(arg) {
-    return (this._department = arg);
+  get department() {
+    return this._department;
   }
 
-  get manager() {
-    return this._department.manager;
+  set department(arg) {
+    return (this._department = arg);
   }
 }
 
@@ -32,5 +34,5 @@ class Department {
 }
 
 function client() {
-  const manager = aPerson.manager;
+  const manager = aPerson.department.manager;
 }
