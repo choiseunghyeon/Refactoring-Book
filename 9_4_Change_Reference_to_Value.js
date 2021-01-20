@@ -7,28 +7,31 @@ class Person {
     return this._telephoneNumber.areaCode;
   }
   set officeAreaCode(arg) {
-    return (this._telephoneNumber.areaCode = arg);
+    return (this._telephoneNumber = new TelephoneNumber(arg, this.officeNumber));
   }
   get officeNumber() {
     return this._telephoneNumber.number;
   }
   set officeNumber(arg) {
-    return (this._telephoneNumber.number = arg);
+    return (this._telephoneNumber = new TelephoneNumber(this.officeAreaCode, arg));
   }
 }
 
 class TelephoneNumber {
+  constructor(areaCode, number) {
+    this._areaCode = areaCode;
+    this._number = number;
+  }
+
   get areaCode() {
     return this._areaCode;
   }
-  set areaCode(arg) {
-    return (this._areaCode = arg);
-  }
-
   get number() {
     return this._number;
   }
-  set number(arg) {
-    return (this._number = arg);
+
+  equals(other) {
+    if (!(other instanceof TelephoneNumber)) return false;
+    return this.areaCode === other.areaCode && this.number === other.number;
   }
 }
