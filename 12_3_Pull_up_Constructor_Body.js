@@ -1,11 +1,14 @@
 // e.g 1
-class Party {}
+class Party {
+  constructor(name) {
+    this._name = name;
+  }
+}
 
 class Employee extends Party {
   constructor(name, id, monthlyCost) {
-    super();
+    super(name);
     this._id = id;
-    this._name = name;
     this._monthlyCost = monthlyCost;
   }
   // 생략
@@ -13,8 +16,7 @@ class Employee extends Party {
 
 class Department extends Party {
   constructor(name, staff) {
-    super();
-    this._name = name;
+    super(name);
     this._staff = staff;
   }
   // 생략
@@ -33,6 +35,10 @@ class Employee {
   assignCar() {
     // ...
   }
+
+  finishConstruction() {
+    if (this.isPrivileged) this.assignCar();
+  }
   // 생략
 }
 
@@ -40,7 +46,7 @@ class Manager extends Employee {
   constructor(name, grade) {
     super(name);
     this._grade = grade;
-    if (this.isPrivileged) this.assignCar(); // 모든 서브클래스가 수행한다.
+    this.finishConstruction(); // 모든 서브클래스가 수행한다.
   }
 
   get isPrivileged() {
