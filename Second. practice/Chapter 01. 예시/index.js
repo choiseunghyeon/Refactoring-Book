@@ -56,19 +56,11 @@ function statement(invoice, plays) {
   }
 
   function totalAmount(data) {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-    return result;
+    return data.performances.reduce((total, perf) => (total += perf.amount), 0);
   }
 
   function totalVolumneCredits(data) {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
-    }
-    return result;
+    return data.performances.reduce((total, perf) => (total += perf.volumeCredits), 0);
   }
 
   function renderPlainText(data, plays) {
