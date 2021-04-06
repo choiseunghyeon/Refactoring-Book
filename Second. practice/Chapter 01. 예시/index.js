@@ -14,14 +14,19 @@ function statement(invoice, plays) {
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석\n)`;
   }
 
-  let totalAmount = 0;
-  for (let perf of invoice.performances) {
-    totalAmount += amountFor(perf);
-  }
+  let totalAmount = zzzTemp();
 
   result += `총액 ${usd(totalAmount)}\n`;
   result += `적립 포인트: ${totalVolumneCredits()}점\n`;
   return result;
+
+  function zzzTemp() {
+    let totalAmount = 0;
+    for (let perf of invoice.performances) {
+      totalAmount += amountFor(perf);
+    }
+    return totalAmount;
+  }
 
   function totalVolumneCredits() {
     let volumeCredits = 0;
