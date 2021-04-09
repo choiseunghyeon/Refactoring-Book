@@ -29,6 +29,10 @@ mocha ref: https://mochajs.org/#installation
   - 깔끔하게 정리된 코드는 이전에 보이지 않던 설계가 눈에 들어온다.
 - 쓰레기 줍기 리팩터링
 
+## YAGNI - you aren't going to need it - 102p.0
+
+- 자가 테스트 코드, 지속적 통합, 리팩터링은 YAGNI에 긍정적인 영향을 준다.
+
 ## Tip
 
 - 프로그램이 기능을 추가하기 편한 구조가 아니라면, 먼저 기능을 추가하기 쉬운 형태로 리팩터링하고 나서 기능을 추가하자.
