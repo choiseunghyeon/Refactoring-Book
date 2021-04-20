@@ -62,17 +62,21 @@ function printBanner() {
 
 // 지역 변수의 값을 변경할 때
 function printOwing(invoice) {
-  let outstanding = 0;
   printBanner();
 
-  // 미해결 채무(outStanding)를 계산한다.
-  for (const o of invoice.orders) {
-    outstanding += o.amount;
-  }
+  const outstanding = calculateOutstanding(invoice);
 
   recordDueDate(invoice);
 
   printDetails(invoice, outstanding);
+}
+
+function calculateOutstanding(invoice) {
+  let result = 0;
+  for (const o of invoice.orders) {
+    result += o.amount;
+  }
+  return result;
 }
 
 function recordDueDate(invoice) {
