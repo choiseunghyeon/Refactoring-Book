@@ -1,21 +1,12 @@
 // 1
 function rating(aDriver) {
-  return moreThanFiveLateDeliveries(aDriver) ? 2 : 1;
-}
-
-function moreThanFiveLateDeliveries(dvr) {
-  return dvr.numberOfLateDeliveries > 5;
+  return aDriver.numberOfLateDeliveries > 5 ? 2 : 1;
 }
 
 // 2
-
 function reportLines(aCustomer) {
   const lines = [];
-  gatherCustomerData(lines, aCustomer);
+  lines.push(["name", aCustomer.name]);
+  lines.push(["location", aCustomer.location]);
   return lines;
-}
-
-function gatherCustomerData(out, aCustomer) {
-  out.push(["name", aCustomer.name]);
-  out.push(["location", aCustomer.location]);
 }
