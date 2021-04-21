@@ -15,8 +15,13 @@ function client() {
 
 // 값 캡슐화하기
 let defaultOwner = { firstName: "승현", lastName: "최" };
+// 방법 1
 function defaultOwner() {
-  return defaultOwner;
+  return Object.assign({}, defaultOwner);
+}
+// 방법 2 레코드 캡슐화하기(7.1절)
+function defaultOwner() {
+  return new Person(defaultOwner);
 }
 function setDefaultOwner(arg) {
   defaultOwner = arg;
@@ -24,5 +29,18 @@ function setDefaultOwner(arg) {
 
 function client() {
   const owner1 = defaultOwner();
-  owner1.lastName = "파슨스"; // 참조는 캡슐화 되었지만 값 내부 값 변경은 제어가 불가능
+  owner1.lastName = "파슨스";
+}
+
+class Person {
+  constructor(data) {
+    this._lastName = data.lastName;
+    this._firstname = data.firstName;
+  }
+  get lastName() {
+    return this._lastName;
+  }
+  get firstName() {
+    return this._firstname;
+  }
 }
