@@ -13,3 +13,18 @@ function circum(radius) {
 function circumference(radius) {
   return 2 * Math.PI * radius;
 }
+
+// 매개변수 추가하기 - 마이그레이션 절차
+class Book {
+  constructor() {}
+
+  addReservation(customer) {
+    this._reservations.push(customer);
+  }
+}
+
+function client() {
+  const book = new Book();
+  const customer = "Choi";
+  book.addReservation(customer);
+}
