@@ -19,6 +19,10 @@ class Book {
   constructor() {}
 
   addReservation(customer) {
+    this.zzzAddReservation(customer);
+  }
+
+  zzzAddReservation(customer) {
     this._reservations.push(customer);
   }
 }
