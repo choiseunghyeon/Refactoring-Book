@@ -18,13 +18,8 @@ function circumference(radius) {
 class Book {
   constructor() {}
 
-  addReservation(customer) {
-    this.zzzAddReservation(customer, false);
-  }
-
-  zzzAddReservation(customer, isPriority) {
-    // 호출하는 곳에서 새 매개변수를 실제로 사용하는지 확인
-    assert(isPriority === true || isPriority === false);
+  addReservation(customer, isPriority) {
+    // isPriority 사용...
     this._reservations.push(customer);
   }
 }
@@ -32,5 +27,5 @@ class Book {
 function client() {
   const book = new Book();
   const customer = "Choi";
-  book.zzzAddReservation(customer, true);
+  book.addReservation(customer, true);
 }
