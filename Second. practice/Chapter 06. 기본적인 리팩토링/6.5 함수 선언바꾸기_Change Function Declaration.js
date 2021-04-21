@@ -29,3 +29,12 @@ function client() {
   const customer = "Choi";
   book.addReservation(customer, true);
 }
+
+// 매개변수를 속성으로 바꾸기
+function inNewEngland(aCustomer) {
+  return ["MA", "CT", "ME", "VT", "NH", "RI"].includes(aCustomer.address.state);
+}
+
+function client() {
+  const newEnglanders = someCustomers.filter(c => inNewEngland(c));
+}
