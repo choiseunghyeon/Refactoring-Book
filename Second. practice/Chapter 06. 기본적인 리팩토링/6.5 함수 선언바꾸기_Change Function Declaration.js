@@ -19,10 +19,12 @@ class Book {
   constructor() {}
 
   addReservation(customer) {
-    this.zzzAddReservation(customer);
+    this.zzzAddReservation(customer, false);
   }
 
-  zzzAddReservation(customer) {
+  zzzAddReservation(customer, isPriority) {
+    // 호출하는 곳에서 새 매개변수를 실제로 사용하는지 확인
+    assert(isPriority === true || isPriority === false);
     this._reservations.push(customer);
   }
 }
@@ -30,5 +32,5 @@ class Book {
 function client() {
   const book = new Book();
   const customer = "Choi";
-  book.addReservation(customer);
+  book.zzzAddReservation(customer, true);
 }
