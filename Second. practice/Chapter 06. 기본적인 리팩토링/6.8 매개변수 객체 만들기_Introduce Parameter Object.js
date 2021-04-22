@@ -9,10 +9,28 @@ const station = {
   ],
 };
 
-function readingOutsideRange(station, min, max) {
-  return station.readings.filter(r => r.temp < min || r.temp > max);
+function readingOutsideRange(station, range) {
+  return station.readings.filter(r => !range.contains(r.temp));
+}
+
+class NumberRange {
+  constructor(min, max) {
+    this._data = { min, max };
+  }
+
+  get min() {
+    return this._data.min;
+  }
+  get max() {
+    return this._data.max;
+  }
+
+  contains(arg) {
+    return arg >= this.min && arg <= this.max;
+  }
 }
 
 function client() {
-  let alerts = readingOutsideRange(station, operatingPlan.temperaturFloor, operatingPlan.temperaturCeiling);
+  const range = new NumberRange(operatingPlan.temperaturFloor, operatingPlan.temperaturCeiling);
+  let alerts = readingOutsideRange(station, range);
 }
