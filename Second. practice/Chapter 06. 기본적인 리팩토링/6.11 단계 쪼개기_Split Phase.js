@@ -5,12 +5,19 @@
     나중에 상품 가격과 배송비 계산을 더 복잡하게 만드는 변경이 생긴다면 이 코드는 두 단계로 나누는 것이 좋다.
 */
 function priceOrder(product, quantity, shippingMethod) {
+  const priceData = calculatePricingData(product, quantity);
+  return applyShipping(priceData, shippingMethod);
+}
+
+function calculatePricingData(product, quantity) {
   const basePrice = product.basePrice * quantity;
   const discount = Math.max(quantity - product.discountThreshold, 0) * product.basePrice * product.discountRate;
 
-  const shippingPerCase = basePrice > shippingMethod.discountThreshold ? shippingMethod.discountFee : shippingMethod.feePerCase;
-  const shippingCost = quantity * shippingPerCase;
+  return { basePrice, quantity, discount };
+}
 
-  const price = basePrice - discount + shippingCost;
-  return price;
+function applyShipping(priceData, shippingMethod) {
+  const shippingPerCase = priceData.basePrice > shippingMethod.discountThreshold ? shippingMethod.discountFee : shippingMethod.feePerCase;
+  const shippingCost = priceData.quantity * shippingPerCase;
+  return priceData.basePrice - priceData.discount + shippingCost;
 }
