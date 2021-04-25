@@ -1,3 +1,4 @@
+// 간단한 레코드 캡슐화하기
 const organization = new Organization({ name: "최승현", country: "KR" });
 function getOrganization() {
   return organization;
@@ -25,5 +26,42 @@ class Organization {
   }
   set country(aCountryCode) {
     return (this._country = aCountryCode);
+  }
+}
+
+// 중첩된 레코드 캡슐화하기
+
+const customerData = {
+  1920: {
+    name: "마틴 파울러",
+    id: "1920",
+    usages: {
+      2016: {
+        1: 50,
+        2: 55,
+        // 등
+      },
+      2015: {
+        1: 70,
+        2: 63,
+        // 등
+      },
+    },
+  },
+  38673: {
+    name: "닐 포드",
+    id: "38673",
+    // 등
+  },
+};
+
+function client() {
+  //쓰기
+  customerData[customerID].usages[year][month] = amount;
+  // 읽기
+  function compareUsage(customerID, laterYear, month) {
+    const later = customerData[customerID].usages[laterYear][month];
+    const earlier = customerData[customerID].usages[laterYear - 1][month];
+    return { laterAmount: later, change: later - earlier };
   }
 }
