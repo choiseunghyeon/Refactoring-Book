@@ -31,7 +31,7 @@ class Organization {
 
 // 중첩된 레코드 캡슐화하기
 
-const customerData = {
+const customerData = new CustomerData({
   1920: {
     name: "마틴 파울러",
     id: "1920",
@@ -53,15 +53,33 @@ const customerData = {
     id: "38673",
     // 등
   },
-};
+});
+
+function getCustomerData() {
+  return customerData;
+}
 
 function client() {
   //쓰기
-  customerData[customerID].usages[year][month] = amount;
+  getCustomerData().setUsage(customerID, year, month, amount);
   // 읽기
   function compareUsage(customerID, laterYear, month) {
-    const later = customerData[customerID].usages[laterYear][month];
-    const earlier = customerData[customerID].usages[laterYear - 1][month];
+    const later = getCustomerData().usage(customerID, laterYear, month);
+    const earlier = getCustomerData().usage(customerID, laterYear - 1, month);
     return { laterAmount: later, change: later - earlier };
+  }
+}
+
+class CustomerData {
+  constructor(data) {
+    this._data = data;
+  }
+
+  setUsage(customerID, year, month, amount) {
+    this._data[customerID].usages[year][month] = amount;
+  }
+
+  usage(customerID, year, month) {
+    this._data[customerID].usages[year][month];
   }
 }
