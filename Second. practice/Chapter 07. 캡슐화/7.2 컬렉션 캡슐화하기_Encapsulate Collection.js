@@ -9,8 +9,21 @@ class Person {
   get courses() {
     return this._courses;
   }
-  set courses(aList) {
-    return (this._courses = aList);
+  addCourse(aCourse) {
+    this._courses.push(aCourse);
+  }
+  removeCourse(
+    aCourse,
+    fnIfAbsent = () => {
+      throw new RangeError();
+    }
+  ) {
+    const index = this._courses.indexOf(aCourse);
+    if (index === -1) fnIfAbsent();
+    else this._courses.splice(index, 1);
+  }
+  get courses() {
+    return this._courses.slice();
   }
 }
 
@@ -33,12 +46,12 @@ function client(aPerson) {
 
 function client2(params) {
   const basicCoursenames = readBasicCourseNames(filename);
-  aPerson.courses = basicCoursenames.map(name => new Course(name, false));
+  basicCoursenames.forEach(name => aPerson.addCourse(new Course(name, false)));
 }
 
 function client3(params) {
   for (const name of readBasicCourseNames(filename)) {
     // 컬렉션을 제어할 수 없어서 캡슐화가 깨진다.
-    aPerson.courses.push(new Course(name, false));
+    aPerson.courses.addCourse(new Course(name, false));
   }
 }
