@@ -11,6 +11,10 @@ class Person {
   set department(arg) {
     this._department = arg;
   }
+
+  get manager() {
+    this._department.manager;
+  }
 }
 
 class Department {
@@ -31,5 +35,5 @@ class Department {
 // 어떤 사람이 속한 부서의 관리자를 알고 싶다.
 // 부서 클래스가 관리자 정보를 제공한다는 사실을 알아야한다.
 function client(params) {
-  const manager = aPerson.department.manager;
+  const manager = aPerson.manager;
 }
