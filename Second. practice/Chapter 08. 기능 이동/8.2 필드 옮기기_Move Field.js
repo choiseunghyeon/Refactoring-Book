@@ -41,16 +41,20 @@ class Account {
   constructor(number, type, insertRate) {
     this._number = number;
     this._type = type;
+  }
+
+  get insertRate() {
+    return this._type.insertRate;
+  }
+}
+
+class AccountType {
+  constructor(nameString, insertRate) {
+    this._name = nameString;
     this._insertRate = insertRate;
   }
 
   get insertRate() {
     return this._insertRate;
-  }
-}
-
-class AccountType {
-  constructor(nameString) {
-    this._name = nameString;
   }
 }
