@@ -20,10 +20,9 @@ function slideStatements2() {
   let result;
   if (avaliableResources.length === 0) {
     result = createResource();
-    allocatedResources.push(result);
   } else {
     result = avaliableResources.pop();
-    allocatedResources.push(result);
   }
+  allocatedResources.push(result);
   return result;
 }
