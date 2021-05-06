@@ -13,3 +13,17 @@ function slideStatements() {
   charge = charge - discount;
   chargeOrder(charge);
 }
+
+// 조건문이 있을 떄의 슬라이드
+
+function slideStatements2() {
+  let result;
+  if (avaliableResources.length === 0) {
+    result = createResource();
+    allocatedResources.push(result);
+  } else {
+    result = avaliableResources.pop();
+    allocatedResources.push(result);
+  }
+  return result;
+}
