@@ -11,11 +11,18 @@ class ProductionPlan {
 // 소스가 둘 이상일 때
 class ProductionPlan {
   constructor(production) {
-    this._production = production;
+    this._initialProduction = production;
+    this._productionAccumulator = 0;
     this._adjustment = [];
   }
+
   get production() {
-    return this._production;
+    assert(this._productionAccumulator === this.calculatedProductionAccmulator);
+    return this._initialProduction + this._productionAccumulator;
+  }
+
+  get calculatedProductionAccmulator() {
+    return this._adjustment.reduce((sum, a) => sum + a.amount, 0);
   }
 
   applyAdjustment(anAdjustment) {
