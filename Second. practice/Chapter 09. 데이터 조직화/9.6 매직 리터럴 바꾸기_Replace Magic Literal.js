@@ -1,10 +1,15 @@
+const STANDARD_GRAVITY = 9.81;
 function potentialEnergy(mass, height) {
-  return mass * 9.81 * height;
+  return mass * STANDARD_GRAVITY * height;
 }
 
 function client() {
-  if (aValue === "M") {
+  if (isMale(aValue)) {
     return true;
   }
   return false;
+
+  function isMale(value) {
+    return value === "M";
+  }
 }
