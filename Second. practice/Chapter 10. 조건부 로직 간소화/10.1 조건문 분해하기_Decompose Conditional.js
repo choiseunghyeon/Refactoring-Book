@@ -1,7 +1,15 @@
 function someFunc() {
-  if (!aDate.isBefore(plan.summerStart) && !aDate.isAfter(plan.summerEnd)) {
-    charge = quantity * plan.summer;
-  } else {
-    charge = quantity * plan.regularRate + plan.regularServiceCharge;
+  charge = summer() ? summerCharge() : regularCharge();
+
+  function regularCharge() {
+    return quantity * plan.regularRate + plan.regularServiceCharge;
+  }
+
+  function summerCharge() {
+    return quantity * plan.summer;
+  }
+
+  function summer() {
+    return !aDate.isBefore(plan.summerStart) && !aDate.isAfter(plan.summerEnd);
   }
 }
