@@ -69,7 +69,7 @@ function client5() {
 // 객체 리터럴 이용하기 데이터 구조를 읽기만 한다면 클래스 대신 리터럴 객체를 사용해도 된다.
 class Site {
   get customer() {
-    return this._customer === "미확인 고객" ? new UnknownCustomer() : this._customer;
+    return this._customer === "미확인 고객" ? createUnknownCustomer() : this._customer;
   }
 }
 
@@ -83,18 +83,29 @@ class Customer {
   }
 }
 
+function createUnknownCustomer() {
+  return {
+    isUnknown: true,
+    name: "거주자",
+    billingPlan: registry.billingPlans.basic,
+    paymentHistory: { weeksDelinquentInLastYear: 0 },
+  };
+}
+
+function isUnknown(arg) {
+  return arg.isUnknown;
+}
+
 function client1() {
   const aCustomer = site.customer;
   // ... 수 많은 코드 ..
-  let customerName;
-  if (aCustomer === "미확인 고객") customerName = "거주자";
-  else customerName = aCustomer.name;
+  let customerName = aCustomer.name;
 }
 
 function client2() {
-  const plan = aCustomer === "미확인 고객" ? registry.billingPlan.basic : aCustomer.billingPlan;
+  const plan = aCustomer.billingPlan;
 }
 
 function client3() {
-  const weeksDelinquent = aCustomer === "미확인 고객" ? 0 : aCustomer.billingPlan;
+  const weeksDelinquent = aCustomer.paymentHistory.weeksDelinquentInLastYear;
 }
