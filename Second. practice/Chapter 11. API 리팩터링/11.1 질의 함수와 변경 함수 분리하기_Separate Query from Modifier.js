@@ -3,13 +3,15 @@
 // 이름 목록을 흝어 악당을 찾는다.
 
 function alertForMiscreant(people) {
+  if (findMiscreant(people) !== "") setOffAlarms();
+}
+
+function findMiscreant(people) {
   for (const p of people) {
     if (p === "조커") {
-      setOffAlarms();
       return "조커";
     }
     if (p === "사루만") {
-      setOffAlarms();
       return "사루만";
     }
   }
@@ -17,5 +19,6 @@ function alertForMiscreant(people) {
 }
 
 function client() {
-  const found = alertForMiscreant(peopl);
+  const found = findMiscreant(people);
+  alertForMiscreant(people);
 }
