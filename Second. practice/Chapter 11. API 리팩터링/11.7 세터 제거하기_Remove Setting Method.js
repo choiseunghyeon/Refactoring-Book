@@ -1,4 +1,7 @@
 class Person {
+  constructor(id) {
+    this._id = id;
+  }
   get name() {
     return this._name;
   }
@@ -8,13 +11,9 @@ class Person {
   get id() {
     return this._id;
   }
-  set id(arg) {
-    this._id = arg;
-  }
 }
 
 function client() {
-  const martin = new Person();
+  const martin = new Person("1234");
   margin.name = "마틴";
-  martin.id = "1234";
 }
