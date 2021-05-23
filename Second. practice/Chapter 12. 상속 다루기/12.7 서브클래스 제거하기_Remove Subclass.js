@@ -1,24 +1,34 @@
 class Person {
-  constructor(name) {
+  constructor(name, genderCode) {
     this._name = name;
+    this._genderCode = genderCode;
   }
   get name() {
     return this._name;
   }
   get genderCode() {
-    return "X";
+    return this._genderCode;
+  }
+  get isMale() {
+    return this.genderCode === "M";
   }
   // 생략
 }
 
-class Male extends Person {
-  get genderCode() {
-    return "M";
+function client(data) {
+  return data.map(aRecord => createPerson(aRecord));
+}
+function createPerson(aRecord) {
+  switch (aRecord.gender) {
+    case "M":
+      return new Person(aRecord.name, "M");
+    case "F":
+      return new Person(aRecord.name, "F");
+    default:
+      return new Person(aRecord.name, "X");
   }
 }
 
-class Female extends Person {
-  get genderCode() {
-    return "F";
-  }
+function client2() {
+  const numberOfMales = people.filter(p => p.isMale).length;
 }
