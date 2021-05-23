@@ -54,14 +54,46 @@ class Employee {
     return this._type;
   }
   set type(arg) {
-    this._type = arg;
+    this._type = Employee.createEmployeeType(arg);
   }
 
-  get capitalizedType() {
-    return this._type.charAt(0).toUpperCase() + this._type.substr(1).toLowerCase();
+  static createEmployeeType(aString) {
+    switch (aString) {
+      case "engineer":
+        return new Engineer();
+      case "manager":
+        return new Manager();
+      case "salesperson":
+        return new Salesperson();
+      default:
+        throw new Error(`${aString}라는 직원 유형은 없습니다.`);
+    }
   }
-
   toString() {
-    return `${this.name} (${this.capitalizedType})`;
+    return `${this.name} (${this.type.capitalizedName})`;
+  }
+}
+
+class EmployeeType {
+  get capitalizedName() {
+    return this.toString().charAt(0).toUpperCase() + this.toString().substr(1).toLowerCase();
+  }
+}
+
+class Engineer extends EmployeeType {
+  toString() {
+    return "engineer";
+  }
+}
+
+class Manager extends EmployeeType {
+  toString() {
+    return "manager";
+  }
+}
+
+class Salesperson extends EmployeeType {
+  toString() {
+    return "salesperson";
   }
 }
