@@ -65,3 +65,70 @@ function createPremiumBooking() {
 function createBooking(show, date) {
   return new Booking(show, date);
 }
+
+// 서브클래스가 여러 개일 때
+// 상속은 한번만 쓸 수 있으니 종에 따른 분류를 포기하고 야생(wild) 조류와 사육(captivity) 조류로 구분 지을 것이다.
+function createBird(data) {
+  switch (data.type) {
+    case "유럽 제비":
+      return new EuropeanSwallow(data);
+    case "아프리카 제비":
+      return new AfricanSwallow(data);
+    case "노르웨이 파랑 앵무":
+      return new NorwegianBlueParrot(data);
+    default:
+      return new createBird(data);
+  }
+}
+
+class Bird {
+  constructor(data) {
+    this._name = data.name;
+    this._plumage = data.plumage;
+  }
+
+  get name() {
+    return this._name;
+  }
+  get plumage() {
+    return this._plumage || "보통이다";
+  }
+
+  get airSpeedVelocity() {
+    return null;
+  }
+}
+
+class EuropeanSwallow extends Bird {
+  get airSpeedVelocity() {
+    return 35;
+  }
+}
+
+class AfricanSwallow extends Bird {
+  constructor(data) {
+    super(data);
+    this._numberOfCoconuts = data.numberOfCoconuts;
+  }
+
+  get airSpeedVelocity() {
+    return 40 - 2 * this._numberOfCoconuts;
+  }
+}
+
+class NorwegianBlueParrot extends Bird {
+  constructor(data) {
+    super(data);
+    this._voltage = data._voltage;
+    this._isNailed = data.isNailed;
+  }
+
+  get plumage() {
+    if (this._voltage > 100) return "그을렸다";
+    else return this._plumage || "예쁘다";
+  }
+
+  get airSpeedVelocity() {
+    return this._isNailed ? 0 : 10 + this._voltage / 10;
+  }
+}
