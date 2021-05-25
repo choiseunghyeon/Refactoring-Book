@@ -68,30 +68,52 @@ function createBooking(show, date) {
 
 // 서브클래스가 여러 개일 때
 // 상속은 한번만 쓸 수 있으니 종에 따른 분류를 포기하고 야생(wild) 조류와 사육(captivity) 조류로 구분 지을 것이다.
+
+// refactoring 이후 위임으로 옮겨진 종 계층 구조는 더 엄격하게 종과 관련한 내용만을 다루게 되었다. 즉, 위임 클래스들은 종에 따라 달라지는 데이터와 메서드만을 담게 되고 종과 상관없는 공통 코드는 Bird 자체와 미래의 서브클래스들에 남는다.
 function createBird(data) {
-  switch (data.type) {
-    case "유럽 제비":
-      return new EuropeanSwallow(data);
-    case "아프리카 제비":
-      return new AfricanSwallow(data);
-    case "노르웨이 파랑 앵무":
-      return new NorwegianBlueParrot(data);
-    default:
-      return new createBird(data);
-  }
+  return new Bird(data);
 }
 
 class Bird {
   constructor(data) {
     this._name = data.name;
     this._plumage = data.plumage;
+    this._speciesDelegate = this.selectSpeciesDelegate(data);
+  }
+
+  selectSpeciesDelegate(data) {
+    switch (data.type) {
+      case "유럽 제비":
+        return new EuropeanSwallowDelegate(this);
+      case "아프리카 제비":
+        return new AfricanSwallowDelegate(data, this);
+      case "노르웨이 파랑 앵무":
+        return new NorwegianBlueParrotDelegate(data, this);
+      default:
+        return new SpeciesDelegate(data, this);
+    }
   }
 
   get name() {
     return this._name;
   }
+
   get plumage() {
-    return this._plumage || "보통이다";
+    return this._speciesDelegate.plumage;
+  }
+
+  get airSpeedVelocity() {
+    return this._speciesDelegate.airSpeedVelocity;
+  }
+}
+
+class SpeciesDelegate {
+  constructor(data, bird) {
+    this._bird = bird;
+  }
+
+  get plumage() {
+    this._bird._plumage || "보통이다.";
   }
 
   get airSpeedVelocity() {
@@ -99,15 +121,15 @@ class Bird {
   }
 }
 
-class EuropeanSwallow extends Bird {
+class EuropeanSwallowDelegate extends SpeciesDelegate {
   get airSpeedVelocity() {
     return 35;
   }
 }
 
-class AfricanSwallow extends Bird {
-  constructor(data) {
-    super(data);
+class AfricanSwallowDelegate extends SpeciesDelegate {
+  constructor(data, bird) {
+    super(data, bird);
     this._numberOfCoconuts = data.numberOfCoconuts;
   }
 
@@ -116,19 +138,19 @@ class AfricanSwallow extends Bird {
   }
 }
 
-class NorwegianBlueParrot extends Bird {
-  constructor(data) {
-    super(data);
+class NorwegianBlueParrotDelegate extends SpeciesDelegate {
+  constructor(data, bird) {
+    super(data, bird);
     this._voltage = data._voltage;
     this._isNailed = data.isNailed;
+  }
+
+  get airSpeedVelocity() {
+    return this._isNailed ? 0 : 10 + this._voltage / 10;
   }
 
   get plumage() {
     if (this._voltage > 100) return "그을렸다";
     else return this._plumage || "예쁘다";
-  }
-
-  get airSpeedVelocity() {
-    return this._isNailed ? 0 : 10 + this._voltage / 10;
   }
 }
